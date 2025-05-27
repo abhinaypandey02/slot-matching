@@ -1,23 +1,19 @@
 'use strict';
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = bipartiteMatching;
-const typedarray_pool_1 = __importDefault(require("typedarray-pool"));
 const INF = 1 << 28;
 function bipartiteMatching(leftSize, rightSize, edges) {
     //Initalize adjacency list, visit flag, distance
     const adjN = new Array(leftSize);
-    const g1 = typedarray_pool_1.default.malloc(leftSize);
-    const dist = typedarray_pool_1.default.malloc(leftSize);
+    const g1 = new Uint16Array(leftSize);
+    const dist = new Uint16Array(leftSize);
     for (let i = 0; i < leftSize; ++i) {
         g1[i] = -1;
         adjN[i] = [];
         dist[i] = INF;
     }
     const adjM = new Array(rightSize);
-    const g2 = typedarray_pool_1.default.malloc(rightSize);
+    const g2 = new Uint16Array(rightSize);
     for (let i = 0; i < rightSize; ++i) {
         g2[i] = -1;
         adjM[i] = [];
@@ -54,7 +50,7 @@ function bipartiteMatching(leftSize, rightSize, edges) {
         return false;
     }
     //Run search
-    const toVisit = typedarray_pool_1.default.malloc(leftSize);
+    const toVisit = new Uint16Array(leftSize);
     let matching = 0;
     while (true) {
         //Initialize queue
@@ -114,11 +110,6 @@ function bipartiteMatching(leftSize, rightSize, edges) {
         }
         result[count++] = [i, g1[i]];
     }
-    //Clean up
-    typedarray_pool_1.default.free(toVisit);
-    typedarray_pool_1.default.free(g2);
-    typedarray_pool_1.default.free(dist);
-    typedarray_pool_1.default.free(g1);
     //Return
     return result;
 }

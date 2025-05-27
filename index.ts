@@ -1,20 +1,19 @@
 'use strict';
 
-import pool from 'typedarray-pool';
 const INF = 1 << 28;
 
 export default function bipartiteMatching(leftSize: number, rightSize: number, edges: [number, number][]) {
   //Initalize adjacency list, visit flag, distance
   const adjN: number[][] = new Array(leftSize);
-  const g1 = pool.malloc(leftSize);
-  const dist = pool.malloc(leftSize);
+  const g1 = new Uint16Array(leftSize);
+  const dist = new Uint16Array(leftSize);
   for (let i = 0; i < leftSize; ++i) {
     g1[i] = -1;
     adjN[i] = [];
     dist[i] = INF;
   }
   const adjM: number[][] = new Array(rightSize);
-  const g2 = pool.malloc(rightSize);
+  const g2 = new Uint16Array(rightSize);
   for (let i = 0; i < rightSize; ++i) {
     g2[i] = -1;
     adjM[i] = [];
@@ -54,7 +53,7 @@ export default function bipartiteMatching(leftSize: number, rightSize: number, e
   }
 
   //Run search
-  const toVisit = pool.malloc(leftSize);
+  const toVisit =new Uint16Array(leftSize);
 
   let matching = 0;
   while (true) {
@@ -118,12 +117,6 @@ export default function bipartiteMatching(leftSize: number, rightSize: number, e
     }
     result[count++] = [i, g1[i]];
   }
-
-  //Clean up
-  pool.free(toVisit);
-  pool.free(g2);
-  pool.free(dist);
-  pool.free(g1);
 
   //Return
   return result;
