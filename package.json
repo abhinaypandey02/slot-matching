@@ -1,0 +1,30 @@
+{
+  "name": "slot-matching",
+  "version": "1.0.0",
+  "description": "Find maximum slots for your matching",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "keywords": [
+    "hopcroft karp",
+    "slot matching",
+    "maximum matching",
+    "bipartite graph"
+  ],
+  "author": "Abhinay Pandey",
+  "license": "ISC",
+  "dependencies": {
+    "typedarray-pool": "^1.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
