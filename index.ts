@@ -5,15 +5,15 @@ const INF = 1 << 28;
 export default function bipartiteMatching(leftSize: number, rightSize: number, edges: [number, number][]) {
   //Initalize adjacency list, visit flag, distance
   const adjN: number[][] = new Array(leftSize);
-  const g1 = new Uint16Array(leftSize);
-  const dist = new Uint16Array(leftSize);
+  const g1 = new Array(leftSize);
+  const dist = new Array(leftSize);
   for (let i = 0; i < leftSize; ++i) {
     g1[i] = -1;
     adjN[i] = [];
     dist[i] = INF;
   }
   const adjM: number[][] = new Array(rightSize);
-  const g2 = new Uint16Array(rightSize);
+  const g2 = new Array(rightSize);
   for (let i = 0; i < rightSize; ++i) {
     g2[i] = -1;
     adjM[i] = [];
@@ -53,7 +53,7 @@ export default function bipartiteMatching(leftSize: number, rightSize: number, e
   }
 
   //Run search
-  const toVisit =new Uint16Array(leftSize);
+  const toVisit = new Array(leftSize);
 
   let matching = 0;
   while (true) {
